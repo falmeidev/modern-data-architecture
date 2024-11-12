@@ -28,6 +28,8 @@ The project builds a **data engineering pipeline** that processes marketing data
 3. **SILVER Layer**: Cleans and enriches data, adding calculated fields (e.g., engagement rates and age groups).
 4. **GOLD Layer**: Implements dimensional modeling with **fact and dimension tables**. This layer enables detailed business analysis by structuring data in a star schema format.
 
+ <img src="../resources/imgs/medallion_architecture.png" alt="GOLD Layer Setup" width="600"/>
+
 ## Target Outcomes
 
 This project aims to:
