@@ -2,50 +2,51 @@
 
 ## Overview of Medallion Architecture
 
-The **Medallion Architecture** is a layered framework designed to improve data quality and facilitate data processing in a scalable, organized manner. This architecture divides data storage and processing into distinct layers, typically named **RAW (Bronze)**, **Cleansed (Silver)**, and **Aggregated (Gold)**. Each layer progressively enhances the data quality, moving it from raw, unprocessed states to refined, structured formats ready for analysis. These layers can be seen on the image below.
+The **Medallion Architecture** is a layered framework designed to improve data quality and organize data processing workflows. This architecture divides data storage and processing into distinct layers, named **RAW (Bronze)**, **Cleansed (Silver)**, and **Aggregated (Gold)**. Each layer enhances data quality, transforming it from raw states to refined, structured formats ready for analysis. Below is an illustration of the architecture:
 
- <img src="../resources/imgs/medallion-architecture.png" alt="Medallion Architecture" width="600"/>
+<img src="..\resources\imgs\medallion_architecture.png" alt="Medallion Architecture" width="600"/>
 
-The Medallion Architecture follows these principles:
-1. **Data Quality at Every Layer**: As data flows through each layer, it undergoes validation, cleansing, enrichment, and aggregation steps to improve quality.
-2. **Modularity**: Each layer can be processed separately, providing flexibility in managing data workflows.
-3. **Separation of Concerns**: By segmenting data processing stages, each layer has a dedicated purpose, which improves maintainability and scalability.
+Key principles of the Medallion Architecture include:
+1. **Data Quality at Every Layer**: Data undergoes validation, cleaning, enrichment, and aggregation at each stage.
+2. **Modularity**: Each layer has distinct tasks, allowing flexibility in managing data workflows.
+3. **Separation of Concerns**: Each layer serves a dedicated purpose, improving maintainability and scalability.
 
-## Implementation for Marketing Analytics Dataset
+## Implementation for the Marketing Analytics Dataset
 
-This project applies the Medallion Architecture to the **Marketing Analytics Dataset** to transform raw customer and campaign data into insights for marketing performance and customer behavior analysis. Each layer has specific tasks and transformations to enhance data quality and prepare it for analytical use. The stages are as follows:
+This project applies the Medallion Architecture to a **Marketing Analytics Dataset** to transform raw customer and campaign data into structured insights for marketing performance analysis. Each layer has specific tasks and transformations:
 
 ### 1. RAW Layer (Bronze)
 
-The **RAW Layer** is the initial stage where data is ingested directly from source files in its original format. For this project:
-   - **Data Source**: We load the original CSV file containing customer and campaign data.
-   - **Objective**: Preserve the unaltered data to serve as a single source of truth.
-   - **Storage**: Stored as Delta tables in a dedicated RAW folder, ensuring that any processing or transformations do not affect the original data.
-   
-   This layer allows quick access to the raw data and simplifies debugging, as the unprocessed data is always available.
+The **RAW Layer** is the initial stage where data is ingested directly from source files in its original format:
+   - **Data Source**: The original CSV file containing customer and campaign data.
+   - **Objective**: Preserve unaltered data as the single source of truth.
+   - **Storage**: Data is stored as Delta tables in a dedicated RAW folder, ensuring any processing or transformations do not alter the original data.
+
+This layer provides quick access to the raw data, allowing debugging and validation of data integrity.
 
 ### 2. Cleansed Layer (Silver)
 
-The **Cleansed Layer** performs data cleaning and initial transformations to prepare data for analysis. For this project:
-   - **Data Cleaning**: Remove null values, standardize data types (e.g., customer IDs), and apply any necessary formatting.
-   - **Enrichment**: Calculate additional features, such as age groups based on customer age, or other derived attributes that aid in segmentation and customer insights.
-   - **Purpose**: This layer produces clean, consistent data that is enriched for initial analysis and ready to support further transformation.
+The **Cleansed Layer** performs data cleaning and initial enrichment, preparing the data for analysis:
+   - **Data Cleaning**: Removes duplicates, fills null values, standardizes data types, and normalizes text fields (e.g., `Company`, `Campaign_Type`).
+   - **Enrichment**: Adds calculated fields like `Engagement Rate`, `Cost Per Click`, and categorizes `Target_Audience` into age groups.
+   - **Purpose**: The SILVER layer provides structured and enriched data that is consistent and ready for deeper analytical transformations.
 
-   By preparing data in the SILVER layer, we ensure it is structured and enriched, providing a foundation for aggregation and dimensional modeling in the GOLD layer.
+The SILVER layer ensures that the data is clean, structured, and contains added dimensions for analytical flexibility.
 
 ### 3. Aggregated Layer (Gold)
 
-The **Aggregated Layer** provides the data in an analytical format, optimized for reporting and complex analytics. In this project:
-   - **Data Modeling**: We create a dimensional model that includes fact and dimension tables. Key tables include:
-     - **Fact Table (FactMarketing)**: Contains transaction details, such as purchase amounts and campaign responses, providing quantitative insights.
-     - **Dimension Tables (DimCustomer, DimCampaign)**: Include detailed customer and campaign information, allowing analysts to slice data by age group, income, campaign type, etc.
-   - **Purpose**: This structure supports fast querying and reporting, enabling marketing analysts to explore campaign performance, customer segmentation, and other insights efficiently.
-   
-   The GOLD layer provides a highly organized dataset ready for dashboarding, reporting, or machine learning applications, ensuring maximum data usability.
+The **Aggregated Layer** presents the data in a dimensional model, optimized for analytics and reporting:
+   - **Data Modeling**: Data is structured in fact and dimension tables:
+     - **Fact Table (fact_campaign_performance)**: Aggregates metrics such as Clicks, Impressions, and Conversion Rate, providing quantitative insights.
+     - **Dimension Tables** (`dim_company`, `dim_campaign`, `dim_channel`, `dim_location`): Include descriptive information, supporting analytics by segmenting data by various attributes.
+   - **Purpose**: The GOLD layer supports fast queries and reporting, enabling efficient exploration of campaign performance and customer insights.
 
-## Benefits of Medallion Architecture for This Project
+The GOLD layer provides a highly organized dataset ready for dashboarding, reporting, or machine learning applications.
 
-1. **Data Quality**: The Medallion Architecture ensures high-quality data at every step, making it suitable for analytics and decision-making.
-2. **Scalability**: New data sources or transformations can be easily added without disrupting existing workflows.
-3. **Performance**: By structuring the data in a dimensional model in the GOLD layer, the architecture supports optimized query performance for fast analytics.
+## Benefits of the Medallion Architecture for This Project
+
+1. **Data Quality**: Ensures high-quality data for analytics and decision-making at each layer.
+2. **Scalability**: New data sources and transformations can be added without disrupting existing workflows.
+3. **Performance**: Dimensional modeling in the GOLD layer enables optimized query performance for fast, reliable analytics.
+
 

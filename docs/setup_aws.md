@@ -28,25 +28,17 @@ When you create a cluster in Databricks, the resources are provisioned from AWS,
    - Navigate to the AWS **EC2 Console**.
    - Look for the EC2 instances associated with Databricks clusters. These will typically be automatically created based on the cluster configuration you selected in Databricks.
    
-   *(Insert screenshot showing EC2 instances running in AWS Console, indicating Databricks-related instances)*
+   <img src="../resources/imgs/cluster_creation_step3.png" alt="Cluster Created" width="800"/>
 
 2. **S3 Storage**:
    - Open the AWS **S3 Console**.
    - Search for the S3 bucket(s) associated with your Databricks workspace. These will store the Unity Catalog and other files used in your Databricks environment.
 
-   *(Insert screenshot showing S3 buckets related to Databricks storage)*
+   <img src="../resources/imgs/raw_layer_step1.png" alt="RAW Layer S3 Setup Step 1" width="800"/>
 
 3. **IAM Roles**:
    - Access the **IAM Console** in AWS to see the roles and permissions assigned to Databricks. Databricks uses these roles to interact with other AWS services like S3 and EC2.
 
-   *(Insert screenshot showing IAM roles in the AWS IAM Console associated with Databricks)*
-
-### Conclusion
+     <img src="../resources/imgs/iam_roles.png" alt="RAW Layer S3 Setup Step 1" width="800"/>
 
 By utilizing EC2 instances for computation and S3 for storage, Databricks leverages the power of AWS to deliver a seamless, cloud-based analytics platform. While Databricks abstracts the details of the underlying infrastructure, AWS resources are actively being used to power your workloads and store your data. 
-
-Make sure to review the AWS Console to verify the resources being provisioned and used by Databricks as part of the infrastructure setup.
-
----
-
-*(Ensure to insert the appropriate screenshots in the sections indicated to visually represent the AWS resources in use.)*
